@@ -24,11 +24,19 @@ const NavBar = () => {
   return (
     <>
     <div className='fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] '>
+
         <Image src={assets.header_bg_color} alt="bg" className='w-full'/>
     </div>
       <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 ${isScroll ? " bg-opacity-50 backdrop-blur-lg" : "" }`}>
         <a href="#top">
-            <Image src={assets.logo} alt="logo" className='w-28 cursor-pointer mr-14'/>
+            <div className="flex items-center gap-4">
+    <Image className="w-10 h-10 rounded-full overflow-hidden object-cover" src={assets.profilePic} alt="" />
+    <div className="font-semibold  font-[Ovo]">
+        <div>Chandra Sekhar</div>
+        {/* <div className="text-sm text-gray-500 dark:text-gray-400">Joined in August 2014</div> */}
+    </div>
+</div>
+            {/* <Image src={assets.logo} alt="logo" className='w-28 cursor-pointer mr-14'/> */}
         </a>
         <ul className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 ${isScroll ? "": "bg-white shadow-sm opacity-50"} `} >
             <li><a className='font-[Ovo]' href="#top">Home</a></li>

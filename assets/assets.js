@@ -36,8 +36,11 @@ import send_icon from './send-icon.png';
 import right_arrow_bold from './right-arrow-bold.png';
 import right_arrow_bold_dark from './right-arrow-bold-dark.png';
 import footer_bg_color from './public/footer-bg-color.png'
-
+import profile_img1 from './profile-img1.jpg'; 
+import profilePic from './profilePic.png'
 export const assets = {
+    profilePic,
+    profile_img1,
     footer_bg_color,
     user_image,
     code_icon,
