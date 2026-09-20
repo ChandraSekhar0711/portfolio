@@ -1,0 +1,30 @@
+export const experience = [
+  {
+    company: "Tata Consultancy Services",
+    role: "Full Stack Engineer / Software Engineer",
+    duration: "Oct 2021 — Present",
+    durationShort: "4.5 years",
+    type: "Full-Time",
+    location: "Hyderabad, India",
+    stack: [
+      "React.js",
+      "JavaScript",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "AWS",
+      "Docker",
+      "Spinnaker",
+      "Ansible",
+      "Splunk",
+    ],
+    bullets: [
+      "Built and maintained React.js dashboards used by 200+ engineers for real-time system monitoring, owning the full UI lifecycle from wireframe to production with component-driven architecture.",
+      "Built a shared React component library (20+ components) adopted across 4 internal teams, cutting duplicate UI code by ~40% and speeding up onboarding for new developers.",
+      "Designed RESTful Node.js/Express.js APIs backed by MongoDB, and integrated them into React UIs with loading states, error boundaries, retry logic and auto-refresh for production reliability.",
+      "Optimised frontend performance through code-splitting, lazy loading and memoisation, improving page load speed and reducing bundle size in production.",
+      "Automated CI/CD pipelines with Spinnaker and Docker for zero-downtime deployments across dev, staging and production, and used Splunk dashboards to speed up root-cause analysis during incidents.",
+      "Automated repetitive operational tasks (server patching, health checks) with Python and Ansible, and supported AWS infrastructure (EC2, S3, Lambda) through Agile/Scrum delivery.",
+    ],
+  },
+];
