@@ -23,21 +23,19 @@ function ProjectCard({
 }) {
   // Keep the five cards distributed vertically around the active card:
   // two above, active in the middle, and two below.
-  const rawRelative = (index - currentIndex + total) % total;
-  const relative =
-    rawRelative > Math.floor(total / 2)
-      ? rawRelative - total
-      : rawRelative;
+  // Keep the project order linear. If Project 03 is active:
+  // 01 and 02 stay above it, while 04 and 05 stay below it.
+  const relative = index - currentIndex;
 
   const isActive = relative === 0;
   const isVisible = Math.abs(relative) <= 2;
 
   const positions = {
-    "-2": { y: -430, x: 54, width: "76%", scale: 0.94 },
-    "-1": { y: -310, x: 28, width: "82%", scale: 0.97 },
-    "0": { y: -250, x: 0, width: "100%", scale: 1 },
-    "1": { y: 250, x: 24, width: "84%", scale: 0.97 },
-    "2": { y: 370, x: 48, width: "76%", scale: 0.94 },
+    "-2": { y: -205, x: 54, width: "72%", scale: 0.91 },
+    "-1": { y: -135, x: 28, width: "80%", scale: 0.95 },
+    "0": { y: -200, x: 0, width: "100%", scale: 1 },
+    "1": { y: 165, x: 24, width: "80%", scale: 0.95 },
+    "2": { y: 235, x: 48, width: "72%", scale: 0.91 },
   };
 
   const position = positions[String(relative)] || positions["0"];
@@ -53,7 +51,7 @@ function ProjectCard({
         "rounded-[1.5rem] border bg-card shadow-card",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
         isActive
-          ? "h-[500px] border-accent shadow-glow"
+          ? "h-[400px] border-accent shadow-glow"
           : "h-[112px] border-border",
         !isVisible ? "pointer-events-none" : "",
       ].join(" ")}
@@ -308,9 +306,9 @@ export default function ProjectShowcase({ projects }) {
 
   return (
     <div className="hidden lg:block">
-      <div className="grid h-[760px] grid-cols-[minmax(0,1.05fr)_minmax(400px,0.95fr)] gap-6">
-        <div className="relative h-[760px] min-h-0">
-          <div className="relative h-[720px] w-full overflow-visible">
+      <div className="grid h-[640px] grid-cols-[minmax(0,1.05fr)_minmax(400px,0.95fr)] gap-6">
+        <div className="relative h-[640px] min-h-0">
+          <div className="relative h-[600px] w-full overflow-visible">
             {projects.map((project, index) => (
               <ProjectCard
                 key={project.slug}
@@ -330,12 +328,12 @@ export default function ProjectShowcase({ projects }) {
             ))}
           </div>
 
-          <p className="mt-2 text-center text-xs tracking-wide text-text-muted">
+          <p className="mt-1 text-center text-xs tracking-wide text-text-muted">
             Drag or click a card to explore
           </p>
         </div>
 
-        <div className="h-[760px] min-h-0 overflow-hidden rounded-[1.75rem] border border-border bg-card/80 p-7 shadow-card backdrop-blur-xl sm:p-8">
+        <div className="h-[640px] min-h-0 overflow-hidden rounded-[1.75rem] border border-border bg-card/80 p-7 shadow-card backdrop-blur-xl sm:p-8">
           <AnimatePresence mode="wait">
             <ProjectDetails
               key={activeProject.slug}
