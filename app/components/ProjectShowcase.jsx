@@ -12,30 +12,66 @@ const spring = {
   mass: 0.7,
 };
 
-function ProjectCard({ project, index, stackPosition, onSelect }) {
-  const isActive = stackPosition === 0;
+function ProjectCard({
+  project,
+  index,
+  currentIndex,
+  total,
+  onSelect,
+  onNext,
+}) {
+  const relative = (index - currentIndex + total) % total;
+  const isActive = relative === 0;
+  const isVisible = relative <= 2;
+
+  const x = relative * 22;
+  const y = relative * 22;
+  const scale = 1 - relative * 0.025;
 
   return (
     <motion.button
       type="button"
-      onClick={() => onSelect(index)}
+      onClick={() => {
+        if (isActive) return;
+        onSelect(index);
+      }}
       className={[
-        "absolute left-0 top-0 w-full text-left",
+        "absolute left-0 top-0 h-full w-full text-left",
         "rounded-[1.5rem] border bg-card shadow-card",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
         isActive
           ? "border-accent shadow-glow"
-          : "border-border hover:border-accent/60",
+          : "border-border",
+        !isVisible ? "pointer-events-none" : "",
       ].join(" ")}
+      style={{
+        zIndex: total - relative,
+        transformOrigin: "top left",
+      }}
       animate={{
-        y: isActive ? 0 : 510 + (stackPosition - 1) * 104,
-        scale: isActive ? 1 : 0.98 - (stackPosition - 1) * 0.01,
-        opacity: 1,
+        x,
+        y,
+        scale,
+        opacity: isVisible ? 1 : 0,
       }}
       transition={spring}
-      style={{
-        zIndex: 40 - stackPosition,
-      }}
+      drag={isActive ? "x" : false}
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.18}
+      whileDrag={isActive ? { cursor: "grabbing" } : undefined}
+      onDragEnd={
+        isActive
+          ? (_, info) => {
+              const shouldAdvance =
+                Math.abs(info.offset.x) > 90 ||
+                Math.abs(info.velocity.x) > 500;
+
+              if (shouldAdvance) {
+                onNext();
+              }
+            }
+          : undefined
+      }
     >
       {isActive ? (
         <div className="p-4 sm:p-5">
@@ -85,32 +121,8 @@ function ProjectCard({ project, index, stackPosition, onSelect }) {
           </div>
         </div>
       ) : (
-        <div className="flex h-[104px] items-center gap-4 px-5 py-3">
-          <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-xl border border-border bg-bg-secondary">
-            {project.images?.[0] && (
-              <Image
-                src={project.images[0]}
-                alt=""
-                fill
-                sizes="112px"
-                className="object-cover"
-              />
-            )}
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent/80">
-              Project {String(index + 1).padStart(2, "0")}
-            </p>
-            <h3 className="mt-0.5 truncate text-sm font-semibold text-text">
-              {project.title}
-            </h3>
-            <p className="mt-0.5 truncate text-xs text-text-secondary">
-              {project.tagline}
-            </p>
-          </div>
-
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-bg-secondary text-[11px] font-semibold text-text-muted">
+        <div className="relative h-full w-full">
+          <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-lg bg-bg-secondary text-xs font-semibold text-text-muted">
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
@@ -247,36 +259,32 @@ export default function ProjectShowcase({ projects }) {
 
   if (!projects?.length) return null;
 
-  const orderedProjects = [
-    projects[activeIndex],
-    ...projects.filter((_, index) => index !== activeIndex),
-  ];
   const activeProject = projects[activeIndex];
+
+  const showNext = () => {
+    setActiveIndex((current) => (current + 1) % projects.length);
+  };
 
   return (
     <div className="hidden lg:block">
       <div className="grid h-[760px] grid-cols-[minmax(0,1.05fr)_minmax(400px,0.95fr)] gap-6">
         <div className="relative h-[760px] min-h-0">
-          <div className="relative h-[720px] w-full overflow-hidden">
-            {orderedProjects.map((project, stackPosition) => {
-              const index = projects.findIndex(
-                (item) => item.slug === project.slug
-              );
-
-              return (
-                <ProjectCard
-                  key={project.slug}
-                  project={project}
-                  index={index}
-                  stackPosition={stackPosition}
-                  onSelect={setActiveIndex}
-                />
-              );
-            })}
+          <div className="relative h-[720px] w-full overflow-visible">
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={project.slug}
+                project={project}
+                index={index}
+                currentIndex={activeIndex}
+                total={projects.length}
+                onSelect={setActiveIndex}
+                onNext={showNext}
+              />
+            ))}
           </div>
 
           <p className="mt-2 text-center text-xs tracking-wide text-text-muted">
-            Select a project
+            Drag or click a card to explore
           </p>
         </div>
 
