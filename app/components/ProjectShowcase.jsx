@@ -67,7 +67,7 @@ function ProjectCard({ project, index, activeIndex, total, onSelect }) {
               <h3 className="text-xl font-bold tracking-tight text-text sm:text-2xl">
                 {project.title}
               </h3>
-              <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-text-secondary">
+              <p className="mt-1.5 max-w-xl text-xs leading-5 text-text-secondary">
                 {project.tagline}
               </p>
             </div>
@@ -133,10 +133,10 @@ function ProjectDetails({ project, index, total }) {
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             {project.status}
           </p>
-          <h3 className="text-3xl font-bold tracking-tight text-text">
+          <h3 className="text-2xl font-bold tracking-tight text-text">
             {project.title}
           </h3>
-          <p className="mt-3 max-w-xl text-sm leading-7 text-text-secondary">
+          <p className="mt-2 max-w-xl text-xs leading-6 text-text-secondary">
             {project.tagline}
           </p>
         </div>
@@ -146,13 +146,13 @@ function ProjectDetails({ project, index, total }) {
         </span>
       </div>
 
-      <div className="mt-5 flex shrink-0 gap-3">
+      <div className="mt-4 flex shrink-0 gap-2.5">
         {project.github && (
           <a
             href={project.github}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-text px-5 py-2.5 text-sm font-medium text-bg transition-transform hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-lg bg-text px-4 py-2 text-xs font-medium text-bg transition-transform hover:-translate-y-0.5"
           >
             <Github className="h-4 w-4" aria-hidden="true" />
             Code
@@ -164,7 +164,7 @@ function ProjectDetails({ project, index, total }) {
             href={project.demo}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-text transition-colors hover:border-accent hover:text-accent"
+            className="inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-xs font-medium text-text transition-colors hover:border-accent hover:text-accent"
           >
             <ExternalLink className="h-4 w-4" aria-hidden="true" />
             Live Demo
@@ -172,21 +172,21 @@ function ProjectDetails({ project, index, total }) {
         )}
       </div>
 
-      <div className="my-5 border-t border-border" />
+      <div className="my-4 border-t border-border" />
 
       <div className="min-h-0 flex-1 overflow-y-auto pr-2 [scrollbar-width:thin]">
-        <div className="space-y-6">
+        <div className="space-y-4">
           <section>
-            <h4 className="mb-2 text-base font-semibold text-text">Overview</h4>
-            <p className="text-sm leading-7 text-text-secondary">
+            <h4 className="mb-1.5 text-sm font-semibold text-text">Overview</h4>
+            <p className="text-xs leading-6 text-text-secondary">
               {project.overview || project.description}
             </p>
           </section>
 
           {project.features?.length > 0 && (
             <section>
-              <h4 className="mb-3 text-base font-semibold text-text">Key Features</h4>
-              <ul className="space-y-2">
+              <h4 className="mb-1.5 text-xs font-semibold text-text">Key Features</h4>
+              <ul className="space-y-1.5">
                 {project.features.map((feature) => (
                   <li
                     key={feature}
@@ -216,14 +216,14 @@ function ProjectDetails({ project, index, total }) {
         </div>
       </div>
 
-      <div className="mt-6 grid shrink-0 gap-4 border-t border-border pt-5 sm:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-bg-secondary/40 p-4">
-          <h4 className="mb-3 text-sm font-semibold text-text">Tech Stack</h4>
+      <div className="mt-4 grid shrink-0 gap-3 border-t border-border pt-5 sm:grid-cols-2">
+        <div className="rounded-xl border border-border bg-bg-secondary/40 p-3">
+          <h4 className="mb-2 text-xs font-semibold text-text">Tech Stack</h4>
           <div className="flex flex-wrap gap-1.5">
             {project.stack.map((tech) => (
               <span
                 key={tech}
-                className="rounded-full border border-border px-2.5 py-1 text-xs text-text-secondary"
+                className="rounded-full border border-border px-2 py-0.5 text-[11px] text-text-secondary"
               >
                 {tech}
               </span>
@@ -251,9 +251,9 @@ export default function ProjectShowcase({ projects }) {
 
   return (
     <div className="hidden lg:block">
-      <div className="grid min-h-[650px] grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] gap-7">
-        <div className="relative min-h-[650px]">
-          <div className="relative h-[600px] w-full">
+      <div className="grid min-h-[590px] grid-cols-[minmax(0,1.05fr)_minmax(400px,0.95fr)] gap-6">
+        <div className="relative min-h-[590px]">
+          <div className="relative h-[540px] w-full">
             {projects.map((project, index) => (
               <ProjectCard
                 key={project.slug}
