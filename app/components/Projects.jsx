@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import * as motion from "motion/react-client";
-import { fadeUp, stagger, viewportOnce } from "@/app/lib/motion";
+import { fadeUp, viewportOnce } from "@/app/lib/motion";
 import { projects } from "@/app/lib/data/projects";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
+import ProjectShowcase from "./ProjectShowcase";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -17,24 +18,34 @@ const Projects = () => {
       <SectionHeading
         eyebrow="My Portfolio"
         title="Projects"
-        subtitle="A closer look at what I'm building. Click a card for the full story."
+        subtitle="A closer look at what I'm building. Scroll to explore each project."
       />
 
       <motion.div
-        variants={stagger(0.12)}
+        variants={fadeUp}
         initial="hidden"
         whileInView="show"
         viewport={viewportOnce}
-        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {projects.map((project) => (
-          <motion.div key={project.slug} variants={fadeUp}>
-            <ProjectCard project={project} onOpen={setSelectedProject} />
-          </motion.div>
-        ))}
+        <ProjectShowcase projects={projects} />
       </motion.div>
 
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <div className="grid gap-6 md:grid-cols-2 lg:hidden">
+        {projects.map((project) => (
+          <ProjectCard
+            key={project.slug}
+            project={project}
+            onOpen={setSelectedProject}
+          />
+        ))}
+      </div>
+
+      <div className="lg:hidden">
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      </div>
     </SectionWrapper>
   );
 };
