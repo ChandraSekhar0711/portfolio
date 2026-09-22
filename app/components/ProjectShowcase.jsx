@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ExternalLink, Github } from "lucide-react";
 import { useState } from "react";
 
-const cardSpring = {
+const spring = {
   type: "spring",
   stiffness: 320,
   damping: 30,
@@ -22,29 +22,28 @@ function ProjectCard({ project, index, activeIndex, total, onSelect }) {
       onClick={() => onSelect(index)}
       className={[
         "absolute left-0 top-0 w-full text-left",
-        "rounded-[1.75rem] border bg-card shadow-card",
+        "rounded-[1.6rem] border bg-card shadow-card",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
         isActive
           ? "z-30 border-accent shadow-glow"
           : "z-10 border-border hover:border-accent/50",
       ].join(" ")}
       animate={{
-        y: isActive ? 0 : 30 + relative * 22,
-        scale: isActive ? 1 : Math.max(0.9, 0.96 - relative * 0.025),
-        opacity: isActive ? 1 : Math.max(0.45, 0.78 - relative * 0.12),
+        y: isActive ? 0 : 310 + Math.min(relative - 1, 2) * 94,
+        scale: isActive ? 1 : Math.max(0.88, 0.96 - (relative - 1) * 0.025),
+        opacity: isActive ? 1 : Math.max(0.42, 0.76 - (relative - 1) * 0.14),
       }}
-      transition={cardSpring}
-      style={{ pointerEvents: isActive ? "auto" : "auto" }}
+      transition={spring}
     >
-      <div className="grid gap-0 lg:grid-cols-2">
+      {isActive ? (
         <div className="p-5 sm:p-6">
-          <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-bg-secondary">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border bg-bg-secondary">
             {project.images?.[0] ? (
               <Image
                 src={project.images[0]}
                 alt={project.title}
                 fill
-                sizes="(min-width: 1024px) 34vw, 90vw"
+                sizes="(min-width: 1280px) 45vw, 50vw"
                 className="object-cover"
                 priority={index === 0}
               />
@@ -54,36 +53,30 @@ function ProjectCard({ project, index, activeIndex, total, onSelect }) {
               </div>
             )}
 
-            <span className="absolute left-3 top-3 rounded-full border border-border bg-bg/85 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-text-secondary backdrop-blur">
+            <span className="absolute left-4 top-4 rounded-full border border-border bg-bg/85 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-text-secondary backdrop-blur">
               {project.status}
             </span>
-          </div>
-        </div>
 
-        <div className="flex min-h-full flex-col justify-center border-t border-border p-5 sm:p-6 lg:border-l lg:border-t-0">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                Project {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="text-2xl font-bold tracking-tight text-text">
+            <span className="absolute right-4 top-4 rounded-lg bg-accent px-3 py-2 text-xs font-bold text-white shadow-lg">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          </div>
+
+          <div className="mt-4 flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <h3 className="text-xl font-bold tracking-tight text-text sm:text-2xl">
                 {project.title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+              <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-text-secondary">
                 {project.tagline}
               </p>
             </div>
 
-            <span className="shrink-0 rounded-lg bg-accent/15 px-3 py-2 text-xs font-bold text-accent">
-              {String(index + 1).padStart(2, "0")}
-            </span>
+            <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-text-muted" aria-hidden="true" />
           </div>
-        </div>
 
-        <div className="border-t border-border p-5 sm:p-6">
-          <h4 className="mb-3 text-sm font-semibold text-text">Tech Stack</h4>
-          <div className="flex flex-wrap gap-2">
-            {project.stack.map((tech) => (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {project.stack.slice(0, 5).map((tech) => (
               <span
                 key={tech}
                 className="rounded-full border border-border bg-bg-secondary/50 px-2.5 py-1 text-xs text-text-secondary"
@@ -93,14 +86,35 @@ function ProjectCard({ project, index, activeIndex, total, onSelect }) {
             ))}
           </div>
         </div>
+      ) : (
+        <div className="flex items-center gap-4 px-5 py-4 sm:px-6">
+          <div className="relative h-14 w-24 shrink-0 overflow-hidden rounded-xl border border-border bg-bg-secondary">
+            {project.images?.[0] && (
+              <Image
+                src={project.images[0]}
+                alt=""
+                fill
+                sizes="96px"
+                className="object-cover"
+              />
+            )}
+          </div>
 
-        <div className="border-t border-border p-5 sm:p-6 lg:border-l">
-          <h4 className="mb-2 text-sm font-semibold text-text">My Contribution</h4>
-          <p className="line-clamp-4 text-sm leading-relaxed text-text-secondary">
-            {project.contribution || "Designed and developed the project end to end."}
-          </p>
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent/80">
+              Project {String(index + 1).padStart(2, "0")}
+            </p>
+            <h3 className="mt-1 truncate font-semibold text-text">{project.title}</h3>
+            <p className="mt-0.5 line-clamp-1 text-xs text-text-secondary">
+              {project.tagline}
+            </p>
+          </div>
+
+          <span className="shrink-0 rounded-lg bg-bg-secondary px-2.5 py-2 text-xs font-semibold text-text-muted">
+            {String(index + 1).padStart(2, "0")}
+          </span>
         </div>
-      </div>
+      )}
     </motion.button>
   );
 }
@@ -122,7 +136,7 @@ function ProjectDetails({ project, index, total }) {
           <h3 className="text-3xl font-bold tracking-tight text-text">
             {project.title}
           </h3>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
+          <p className="mt-3 max-w-xl text-sm leading-7 text-text-secondary">
             {project.tagline}
           </p>
         </div>
@@ -138,7 +152,6 @@ function ProjectDetails({ project, index, total }) {
             href={project.github}
             target="_blank"
             rel="noreferrer"
-            onClick={(event) => event.stopPropagation()}
             className="inline-flex items-center gap-2 rounded-xl bg-text px-5 py-2.5 text-sm font-medium text-bg transition-transform hover:-translate-y-0.5"
           >
             <Github className="h-4 w-4" aria-hidden="true" />
@@ -151,7 +164,6 @@ function ProjectDetails({ project, index, total }) {
             href={project.demo}
             target="_blank"
             rel="noreferrer"
-            onClick={(event) => event.stopPropagation()}
             className="inline-flex items-center gap-2 rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-text transition-colors hover:border-accent hover:text-accent"
           >
             <ExternalLink className="h-4 w-4" aria-hidden="true" />
@@ -171,31 +183,6 @@ function ProjectDetails({ project, index, total }) {
             </p>
           </section>
 
-          <section>
-            <h4 className="mb-2 text-base font-semibold text-text">About the Project</h4>
-            <p className="text-sm leading-7 text-text-secondary">
-              {project.description}
-            </p>
-          </section>
-
-          {project.problem && (
-            <section>
-              <h4 className="mb-2 text-base font-semibold text-text">Problem</h4>
-              <p className="text-sm leading-7 text-text-secondary">
-                {project.problem}
-              </p>
-            </section>
-          )}
-
-          {project.solution && (
-            <section>
-              <h4 className="mb-2 text-base font-semibold text-text">Solution</h4>
-              <p className="text-sm leading-7 text-text-secondary">
-                {project.solution}
-              </p>
-            </section>
-          )}
-
           {project.features?.length > 0 && (
             <section>
               <h4 className="mb-3 text-base font-semibold text-text">Key Features</h4>
@@ -212,6 +199,43 @@ function ProjectDetails({ project, index, total }) {
               </ul>
             </section>
           )}
+
+          {project.problem && (
+            <section>
+              <h4 className="mb-2 text-base font-semibold text-text">Problem</h4>
+              <p className="text-sm leading-7 text-text-secondary">{project.problem}</p>
+            </section>
+          )}
+
+          {project.solution && (
+            <section>
+              <h4 className="mb-2 text-base font-semibold text-text">Solution</h4>
+              <p className="text-sm leading-7 text-text-secondary">{project.solution}</p>
+            </section>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-6 grid shrink-0 gap-4 border-t border-border pt-5 sm:grid-cols-2">
+        <div className="rounded-2xl border border-border bg-bg-secondary/40 p-4">
+          <h4 className="mb-3 text-sm font-semibold text-text">Tech Stack</h4>
+          <div className="flex flex-wrap gap-1.5">
+            {project.stack.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-full border border-border px-2.5 py-1 text-xs text-text-secondary"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-bg-secondary/40 p-4">
+          <h4 className="mb-2 text-sm font-semibold text-text">My Contribution</h4>
+          <p className="text-sm leading-relaxed text-text-secondary">
+            {project.contribution || "Designed and developed the project end to end."}
+          </p>
         </div>
       </div>
     </motion.div>
@@ -228,7 +252,7 @@ export default function ProjectShowcase({ projects }) {
   return (
     <div className="hidden lg:block">
       <div className="grid min-h-[650px] grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] gap-7">
-        <div className="relative min-h-[650px] pb-2 pt-2">
+        <div className="relative min-h-[650px]">
           <div className="relative h-[600px] w-full">
             {projects.map((project, index) => (
               <ProjectCard
