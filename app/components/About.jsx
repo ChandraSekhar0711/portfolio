@@ -1,10 +1,12 @@
 import * as motion from "motion/react-client";
-import { GraduationCap, Award, UserRound } from "lucide-react";
+import { GraduationCap, Award } from "lucide-react";
 import { fadeUp, scaleIn, viewportOnce } from "@/app/lib/motion";
 import { education, certifications } from "@/app/lib/data/education";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import Card from "./Card";
+import Image from "next/image";
+import portfolioImage from "../../assets/portfolio.jpg";
 
 const About = () => {
   return (
@@ -20,11 +22,10 @@ const About = () => {
           className="w-56 sm:w-72 shrink-0"
         >
           <Card
-            hover={false}
-            className="aspect-square w-full flex flex-col items-center justify-center gap-2 text-text-muted"
+            hover={true}
+            className="relative aspect-9/12 w-full overflow-hidden text-text-muted"
           >
-            <UserRound className="w-10 h-10" aria-hidden="true" />
-            <p className="text-sm">Profile pic coming soon</p>
+            <Image src={portfolioImage} alt="Portrait of Chandra Sekhar Rao" fill className="object-cover" />
           </Card>
         </motion.div>
 
