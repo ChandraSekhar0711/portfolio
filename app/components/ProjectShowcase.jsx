@@ -33,7 +33,7 @@ function ProjectCard({
   const positions = {
     "-2": { y: -365, x: 12, width: "92%", scale: 0.91 },
     "-1": { y: -285, x: 6, width: "96%", scale: 0.95 },
-    "0": { y: -200, x: 0, width: "100%", scale: 1 },
+    "0": { y: -175, x: 0, width: "100%", scale: 1 },
     "1": { y: 175, x: 6, width: "96%", scale: 0.95 },
     "2": { y: 245, x: 12, width: "92%", scale: 0.91 },
   };
@@ -92,7 +92,7 @@ function ProjectCard({
       }
     >
       {isActive ? (
-        <div className="h-full p-4 sm:p-5">
+        <div className="flex h-full flex-col overflow-hidden p-4 sm:p-5">
           <div className="relative aspect-[16/8] w-full overflow-hidden rounded-2xl border border-border bg-bg-secondary">
             {project.images?.[0] ? (
               <Image
@@ -118,7 +118,7 @@ function ProjectCard({
             </span>
           </div>
 
-          <div className="mt-3 min-w-0">
+          <div className="mt-3 min-w-0 shrink-0">
             <h3 className="text-xl font-bold tracking-tight text-text">
               {project.title}
             </h3>
@@ -127,7 +127,7 @@ function ProjectCard({
             </p>
           </div>
 
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          <div className="mt-3 flex max-h-16 shrink-0 flex-wrap gap-1.5 overflow-hidden">
             {project.stack.slice(0, 5).map((tech) => (
               <span
                 key={tech}
@@ -305,7 +305,7 @@ export default function ProjectShowcase({ projects }) {
   };
 
   return (
-    <div className="hidden lg:block">
+    <div className="hidden lg:block pt-8">
       <div className="grid h-[640px] grid-cols-[minmax(0,1.05fr)_minmax(400px,0.95fr)] gap-6">
         <div className="relative h-[640px] min-h-0">
           <div className="relative h-[600px] w-full overflow-visible">
