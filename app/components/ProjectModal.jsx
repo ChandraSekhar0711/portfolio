@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { X, Github, ExternalLink } from "lucide-react";
 import { modalBackdrop, modalPanel } from "@/app/lib/motion";
 import Button from "./Button";
-import Tooltip from "./Tooltip";
 import ImageCarousel from "./ImageCarousel";
 
 const SECTIONS = [
@@ -90,15 +89,13 @@ const ProjectModal = ({ project, onClose }) => {
             onClick={(e) => e.stopPropagation()}
             className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-card border border-border shadow-glow"
           >
-            <Tooltip label="Close" position="bottom" className="absolute right-4 top-4 z-10">
-              <button
-                onClick={onClose}
-                aria-label="Close project details"
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-bg-secondary text-text-secondary hover:text-accent transition-colors"
-              >
-                <X className="w-5 h-5" aria-hidden="true" />
-              </button>
-            </Tooltip>
+            <button
+              onClick={onClose}
+              aria-label="Close project details"
+              className="absolute right-4 top-4 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-bg-secondary text-text-secondary hover:text-accent transition-colors"
+            >
+              <X className="w-5 h-5" aria-hidden="true" />
+            </button>
 
             {project.images?.length > 0 && (
               <ImageCarousel
