@@ -82,7 +82,7 @@ function ProjectDetails({ project, index, total }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="flex h-full min-h-0 flex-col"
+      className="flex h-full min-h-0 flex-col overflow-hidden"
     >
       <div className="flex items-start justify-between gap-4">
         <div>
@@ -130,7 +130,7 @@ function ProjectDetails({ project, index, total }) {
 
       <div className="my-4 border-t border-border" />
 
-      <div className="min-h-0 flex-1 overflow-y-auto pr-2 [scrollbar-width:thin]">
+      <div className="min-h-0 flex-1 overflow-y-auto pr-2 [scrollbar-width:thin] overscroll-contain">
         <div className="space-y-4">
           <section>
             <h4 className="mb-1.5 text-sm font-semibold text-text">Overview</h4>
@@ -250,7 +250,7 @@ export default function ProjectShowcase({ projects }) {
           </p>
         </div>
 
-        <div className="min-h-[590px] rounded-[1.75rem] border border-border bg-card/80 p-7 shadow-card backdrop-blur-xl sm:p-8">
+        <div className="h-[540px] min-h-0 overflow-hidden rounded-[1.75rem] border border-border bg-card/80 p-7 shadow-card backdrop-blur-xl sm:p-8">
           <AnimatePresence mode="wait">
             <ProjectDetails
               key={activeProject.slug}
