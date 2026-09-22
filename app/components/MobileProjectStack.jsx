@@ -12,11 +12,11 @@ const spring = {
 };
 
 const positions = {
-  "-2": { y: -445, x: 18, width: "88%", scale: 0.9 },
-  "-1": { y: -370, x: 8, width: "94%", scale: 0.95 },
-  "0": { y: -295, x: 0, width: "100%", scale: 1 },
-  "1": { y: 300, x: 8, width: "94%", scale: 0.95 },
-  "2": { y: 375, x: 18, width: "88%", scale: 0.9 },
+  "-2": { y: -335, x: 14, width: "88%", scale: 0.9 },
+  "-1": { y: -275, x: 7, width: "94%", scale: 0.95 },
+  "0": { y: -250, x: 0, width: "100%", scale: 1 },
+  "1": { y: 275, x: 7, width: "94%", scale: 0.95 },
+  "2": { y: 335, x: 14, width: "88%", scale: 0.9 },
 };
 
 export default function MobileProjectStack({ projects, onOpen }) {
@@ -32,7 +32,7 @@ export default function MobileProjectStack({ projects, onOpen }) {
 
   return (
     <div className="lg:hidden">
-      <div className="relative h-[800px] w-full overflow-visible">
+      <div className="relative h-[700px] w-full overflow-visible">
         {projects.map((project, index) => {
           const relative = index - activeIndex;
           const isActive = relative === 0;
@@ -55,7 +55,7 @@ export default function MobileProjectStack({ projects, onOpen }) {
                 "rounded-2xl border bg-card shadow-card",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
                 isActive
-                  ? "h-[590px] border-accent shadow-glow"
+                  ? "h-[500px] border-accent shadow-glow"
                   : "h-[74px] border-border",
                 !isVisible ? "pointer-events-none" : "",
               ].join(" ")}
