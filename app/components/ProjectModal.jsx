@@ -22,6 +22,7 @@ const ProjectModal = ({ project, onClose }) => {
     if (!project) return undefined;
 
     previousFocus.current = document.activeElement;
+    const scrollY = window.scrollY;
     document.body.style.overflow = "hidden";
     panelRef.current?.focus();
 
@@ -51,7 +52,15 @@ const ProjectModal = ({ project, onClose }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
-      previousFocus.current?.focus?.();
+
+      // Restore focus without letting the browser jump the page back to
+      // the card that opened the modal.
+      previousFocus.current?.focus?.({ preventScroll: true });
+
+      // Lock the current page position while the modal is being removed.
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, behavior: "instant" });
+      });
     };
   }, [project, onClose]);
 

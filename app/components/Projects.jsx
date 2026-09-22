@@ -8,6 +8,7 @@ import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
+import MobileProjectStack from "./MobileProjectStack";
 import ProjectShowcase from "./ProjectShowcase";
 
 const Projects = () => {
@@ -30,15 +31,10 @@ const Projects = () => {
         <ProjectShowcase projects={projects} />
       </motion.div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:hidden">
-        {projects.map((project) => (
-          <ProjectCard
-            key={project.slug}
-            project={project}
-            onOpen={setSelectedProject}
-          />
-        ))}
-      </div>
+      <MobileProjectStack
+        projects={projects}
+        onOpen={setSelectedProject}
+      />
 
       <div className="lg:hidden">
         <ProjectModal
