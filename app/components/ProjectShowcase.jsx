@@ -19,6 +19,7 @@ function ProjectCard({
   total,
   onSelect,
   onNext,
+  onPrevious,
 }) {
   const relative = (index - currentIndex + total) % total;
   const isActive = relative === 0;
@@ -55,19 +56,23 @@ function ProjectCard({
         opacity: isVisible ? 1 : 0,
       }}
       transition={spring}
-      drag={isActive ? "x" : false}
-      dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.18}
+      drag={isActive ? "y" : false}
+      dragConstraints={{ top: 0, bottom: 0 }}
+      dragElastic={0.22}
       whileDrag={isActive ? { cursor: "grabbing" } : undefined}
       onDragEnd={
         isActive
           ? (_, info) => {
-              const shouldAdvance =
-                Math.abs(info.offset.x) > 90 ||
-                Math.abs(info.velocity.x) > 500;
+              const shouldSwitch =
+                Math.abs(info.offset.y) > 90 ||
+                Math.abs(info.velocity.y) > 500;
 
-              if (shouldAdvance) {
+              if (!shouldSwitch) return;
+
+              if (info.offset.y < 0) {
                 onNext();
+              } else {
+                onPrevious();
               }
             }
           : undefined
@@ -279,6 +284,12 @@ export default function ProjectShowcase({ projects }) {
                 total={projects.length}
                 onSelect={setActiveIndex}
                 onNext={showNext}
+                onPrevious={() =>
+                  setActiveIndex(
+                    (current) =>
+                      (current - 1 + projects.length) % projects.length
+                  )
+                }
               />
             ))}
           </div>
