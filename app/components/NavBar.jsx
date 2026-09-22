@@ -8,16 +8,16 @@ import {
   FolderKanban,
   House,
   Mail,
-  Code2,
+  UserRound,
 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { personal } from "@/app/lib/data/personal";
 
 const NAV_LINKS = [
   { href: "#top", label: "Home", id: "top", icon: House },
+  { href: "#about", label: "About", id: "about", icon: UserRound },
   { href: "#experience", label: "Experience", id: "experience", icon: BriefcaseBusiness },
   { href: "#projects", label: "Projects", id: "projects", icon: FolderKanban },
-  { href: "#skills", label: "Skills", id: "skills", icon: Code2 },
   { href: "#contact", label: "Contact", id: "contact", icon: Mail },
 ];
 
@@ -47,7 +47,10 @@ const NavBar = () => {
 
         if (visible[0]) setActiveId(visible[0].target.id);
       },
-      { rootMargin: "-35% 0px -50% 0px", threshold: [0, 0.15, 0.4, 0.7] }
+      {
+        rootMargin: "-35% 0px -50% 0px",
+        threshold: [0, 0.15, 0.4, 0.7],
+      }
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -114,44 +117,46 @@ const NavBar = () => {
 
       <nav
         aria-label="Mobile navigation"
-        className="fixed inset-x-4 bottom-3 z-50 md:hidden"
+        className="fixed inset-x-3 bottom-3 z-50 md:hidden"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
-        <div className="relative mx-auto h-[68px] max-w-[390px]">
-          <div className="absolute inset-x-0 bottom-0 h-[58px] rounded-[1.7rem] border border-border bg-card/95 shadow-[0_-10px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl" />
+        <div className="relative mx-auto h-[76px] w-full max-w-[390px]">
+          <div className="absolute inset-x-0 bottom-0 h-[62px] rounded-[2rem] border border-border bg-card/95 shadow-[0_-8px_30px_rgba(0,0,0,0.3)] backdrop-blur-xl" />
 
           <div
-            className="pointer-events-none absolute left-0 top-0 h-[68px] w-1/5 transition-transform duration-300"
+            className="pointer-events-none absolute left-0 top-0 h-[62px] w-1/5 transition-transform duration-300 ease-out"
             style={{ transform: "translateX(" + activeIndex * 100 + "%)" }}
           >
-            <div className="absolute left-1/2 top-0 h-[58px] w-[58px] -translate-x-1/2 rounded-full border border-accent/40 bg-bg shadow-[0_0_0_7px_var(--bg),0_8px_24px_rgba(0,0,0,0.35)]" />
-            <div className="absolute left-1/2 top-[10px] h-[44px] w-[44px] -translate-x-1/2 rounded-full bg-accent text-accent-ink shadow-glow" />
+            <div className="absolute left-1/2 top-[-8px] h-[56px] w-[56px] -translate-x-1/2 rounded-full border border-accent/50 bg-bg shadow-[0_0_0_6px_var(--bg),0_6px_22px_rgba(0,0,0,0.35)]" />
+            <div className="absolute left-1/2 top-[-2px] flex h-[44px] w-[44px] -translate-x-1/2 items-center justify-center rounded-full bg-accent text-accent-ink shadow-glow">
+              {(() => {
+                const Icon = NAV_LINKS[activeIndex].icon;
+                return <Icon className="h-5 w-5" aria-hidden="true" />;
+              })()}
+            </div>
           </div>
 
-          <ul className="relative grid h-[68px] grid-cols-5 items-end">
+          <ul className="relative grid h-[62px] grid-cols-5 items-center">
             {NAV_LINKS.map((link, index) => {
               const Icon = link.icon;
               const active = activeId === link.id;
 
               return (
-                <li key={link.href} className="flex h-[58px] items-center justify-center">
+                <li key={link.href} className="flex h-full items-center justify-center">
                   <a
                     href={link.href}
                     aria-current={active ? "page" : undefined}
                     className={
-                      "relative flex h-full w-full flex-col items-center justify-center gap-1 text-[9px] font-medium transition-all duration-300 " +
+                      "flex h-full w-full flex-col items-center justify-end gap-1 pb-2 text-[9px] font-medium transition-colors duration-300 " +
                       (active ? "text-accent" : "text-text-muted hover:text-text")
                     }
                   >
-                    <span
-                      className={
-                        "flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 " +
-                        (active ? "-translate-y-3 text-accent-ink" : "")
-                      }
-                    >
-                      <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                    <span className="flex h-5 items-center justify-center">
+                      {!active && (
+                        <Icon className="h-[19px] w-[19px]" aria-hidden="true" />
+                      )}
                     </span>
-                    <span className={active ? "mt-[-8px]" : ""}>{link.label}</span>
+                    <span>{link.label}</span>
                   </a>
                 </li>
               );
