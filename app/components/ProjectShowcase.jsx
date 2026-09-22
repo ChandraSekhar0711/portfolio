@@ -31,11 +31,11 @@ function ProjectCard({
   const isVisible = Math.abs(relative) <= 2;
 
   const positions = {
-    "-2": { y: -205, x: 54, width: "72%", scale: 0.91 },
-    "-1": { y: -135, x: 28, width: "80%", scale: 0.95 },
+    "-2": { y: -370, x: 54, width: "72%", scale: 0.91 },
+    "-1": { y: -300, x: 28, width: "80%", scale: 0.95 },
     "0": { y: -200, x: 0, width: "100%", scale: 1 },
-    "1": { y: 165, x: 24, width: "80%", scale: 0.95 },
-    "2": { y: 235, x: 48, width: "72%", scale: 0.91 },
+    "1": { y: 175, x: 24, width: "80%", scale: 0.95 },
+    "2": { y: 245, x: 48, width: "72%", scale: 0.91 },
   };
 
   const position = positions[String(relative)] || positions["0"];
