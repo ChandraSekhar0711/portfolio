@@ -21,45 +21,60 @@ function ProjectCard({
   onNext,
   onPrevious,
 }) {
-  const relative = (index - currentIndex + total) % total;
-  const isActive = relative === 0;
-  const isVisible = relative <= 2;
+  // Keep the five cards distributed vertically around the active card:
+  // two above, active in the middle, and two below.
+  const rawRelative = (index - currentIndex + total) % total;
+  const relative =
+    rawRelative > Math.floor(total / 2)
+      ? rawRelative - total
+      : rawRelative;
 
-  const x = relative * 22;
-  const y = relative * 22;
-  const scale = 1 - relative * 0.025;
+  const isActive = relative === 0;
+  const isVisible = Math.abs(relative) <= 2;
+
+  const positions = {
+    "-2": { y: -430, x: 54, width: "76%", scale: 0.94 },
+    "-1": { y: -310, x: 28, width: "82%", scale: 0.97 },
+    "0": { y: -250, x: 0, width: "100%", scale: 1 },
+    "1": { y: 250, x: 24, width: "84%", scale: 0.97 },
+    "2": { y: 370, x: 48, width: "76%", scale: 0.94 },
+  };
+
+  const position = positions[String(relative)] || positions["0"];
 
   return (
     <motion.button
       type="button"
       onClick={() => {
-        if (isActive) return;
-        onSelect(index);
+        if (!isActive) onSelect(index);
       }}
       className={[
-        "absolute left-0 top-0 h-full w-full text-left",
+        "absolute top-1/2 text-left",
         "rounded-[1.5rem] border bg-card shadow-card",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
         isActive
-          ? "border-accent shadow-glow"
-          : "border-border",
+          ? "h-[500px] border-accent shadow-glow"
+          : "h-[112px] border-border",
         !isVisible ? "pointer-events-none" : "",
       ].join(" ")}
       style={{
-        zIndex: total - relative,
-        transformOrigin: "top left",
+        left: "50%",
+        width: position.width,
+        marginLeft: "-" + parseFloat(position.width) / 2 + "%",
+        zIndex: 20 - Math.abs(relative),
+        transformOrigin: "center center",
       }}
       animate={{
-        x,
-        y,
-        scale,
-        opacity: isVisible ? 1 : 0,
+        x: position.x,
+        y: position.y,
+        scale: position.scale,
+        opacity: isVisible ? (isActive ? 1 : 0.72) : 0,
       }}
       transition={spring}
       drag={isActive ? "y" : false}
       dragConstraints={{ top: 0, bottom: 0 }}
-      dragElastic={0.22}
-      whileDrag={isActive ? { cursor: "grabbing" } : undefined}
+      dragElastic={0.2}
+      whileDrag={isActive ? { scale: 0.99, cursor: "grabbing" } : undefined}
       onDragEnd={
         isActive
           ? (_, info) => {
@@ -79,8 +94,8 @@ function ProjectCard({
       }
     >
       {isActive ? (
-        <div className="p-4 sm:p-5">
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border bg-bg-secondary">
+        <div className="h-full p-4 sm:p-5">
+          <div className="relative aspect-[16/8] w-full overflow-hidden rounded-2xl border border-border bg-bg-secondary">
             {project.images?.[0] ? (
               <Image
                 src={project.images[0]}
@@ -126,8 +141,29 @@ function ProjectCard({
           </div>
         </div>
       ) : (
-        <div className="relative h-full w-full">
-          <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-lg bg-bg-secondary text-xs font-semibold text-text-muted">
+        <div className="flex h-full items-center gap-4 px-5">
+          <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-xl border border-border bg-bg-secondary">
+            {project.images?.[0] && (
+              <Image
+                src={project.images[0]}
+                alt=""
+                fill
+                sizes="112px"
+                className="object-cover"
+              />
+            )}
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent/80">
+              Project {String(index + 1).padStart(2, "0")}
+            </p>
+            <h3 className="mt-0.5 truncate text-sm font-semibold text-text">
+              {project.title}
+            </h3>
+          </div>
+
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-bg-secondary text-[11px] font-semibold text-text-muted">
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
