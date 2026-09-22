@@ -12,11 +12,11 @@ const spring = {
 };
 
 const positions = {
-  "-2": { y: -285, x: 18, width: "88%", scale: 0.9 },
-  "-1": { y: -205, x: 8, width: "94%", scale: 0.95 },
-  "0": { y: -145, x: 0, width: "100%", scale: 1 },
-  "1": { y: 175, x: 8, width: "94%", scale: 0.95 },
-  "2": { y: 250, x: 18, width: "88%", scale: 0.9 },
+  "-2": { y: -445, x: 18, width: "88%", scale: 0.9 },
+  "-1": { y: -370, x: 8, width: "94%", scale: 0.95 },
+  "0": { y: -295, x: 0, width: "100%", scale: 1 },
+  "1": { y: 300, x: 8, width: "94%", scale: 0.95 },
+  "2": { y: 375, x: 18, width: "88%", scale: 0.9 },
 };
 
 export default function MobileProjectStack({ projects, onOpen }) {
@@ -32,7 +32,7 @@ export default function MobileProjectStack({ projects, onOpen }) {
 
   return (
     <div className="lg:hidden">
-      <div className="relative h-[570px] w-full overflow-visible">
+      <div className="relative h-[800px] w-full overflow-visible">
         {projects.map((project, index) => {
           const relative = index - activeIndex;
           const isActive = relative === 0;
@@ -55,8 +55,8 @@ export default function MobileProjectStack({ projects, onOpen }) {
                 "rounded-2xl border bg-card shadow-card",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
                 isActive
-                  ? "border-accent shadow-glow"
-                  : "border-border",
+                  ? "h-[590px] border-accent shadow-glow"
+                  : "h-[74px] border-border",
                 !isVisible ? "pointer-events-none" : "",
               ].join(" ")}
               style={{
@@ -178,7 +178,7 @@ export default function MobileProjectStack({ projects, onOpen }) {
         })}
       </div>
 
-      <p className="-mt-1 text-center text-[10px] tracking-wide text-text-muted">
+      <p className="mt-2 text-center text-[10px] tracking-wide text-text-muted">
         Swipe up/down or tap a card
       </p>
     </div>
