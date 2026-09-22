@@ -12,22 +12,30 @@ const spring = {
   mass: 0.7,
 };
 
-function ProjectCard({ project, index, activeIndex, onSelect }) {
-  const isActive = index === activeIndex;
+function ProjectCard({ project, index, stackPosition, onSelect }) {
+  const isActive = stackPosition === 0;
 
   return (
     <motion.button
       type="button"
       onClick={() => onSelect(index)}
-      layout
-      transition={spring}
       className={[
-        "relative w-full shrink-0 text-left rounded-[1.5rem] border bg-card",
+        "absolute left-0 top-0 w-full text-left",
+        "rounded-[1.5rem] border bg-card shadow-card",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
         isActive
           ? "border-accent shadow-glow"
-          : "border-border hover:border-accent/50",
+          : "border-border hover:border-accent/60",
       ].join(" ")}
+      animate={{
+        y: isActive ? 0 : 510 + (stackPosition - 1) * 104,
+        scale: isActive ? 1 : 0.98 - (stackPosition - 1) * 0.01,
+        opacity: 1,
+      }}
+      transition={spring}
+      style={{
+        zIndex: 40 - stackPosition,
+      }}
     >
       {isActive ? (
         <div className="p-4 sm:p-5">
@@ -56,15 +64,13 @@ function ProjectCard({ project, index, activeIndex, onSelect }) {
             </span>
           </div>
 
-          <div className="mt-3 flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <h3 className="text-xl font-bold tracking-tight text-text">
-                {project.title}
-              </h3>
-              <p className="mt-1 text-xs leading-5 text-text-secondary">
-                {project.tagline}
-              </p>
-            </div>
+          <div className="mt-3 min-w-0">
+            <h3 className="text-xl font-bold tracking-tight text-text">
+              {project.title}
+            </h3>
+            <p className="mt-1 text-xs leading-5 text-text-secondary">
+              {project.tagline}
+            </p>
           </div>
 
           <div className="mt-3 flex flex-wrap gap-1.5">
@@ -79,14 +85,14 @@ function ProjectCard({ project, index, activeIndex, onSelect }) {
           </div>
         </div>
       ) : (
-        <div className="flex min-h-[82px] items-center gap-3 px-4 py-3">
-          <div className="relative h-14 w-24 shrink-0 overflow-hidden rounded-xl border border-border bg-bg-secondary">
+        <div className="flex h-[104px] items-center gap-4 px-5 py-3">
+          <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-xl border border-border bg-bg-secondary">
             {project.images?.[0] && (
               <Image
                 src={project.images[0]}
                 alt=""
                 fill
-                sizes="96px"
+                sizes="112px"
                 className="object-cover"
               />
             )}
@@ -99,12 +105,12 @@ function ProjectCard({ project, index, activeIndex, onSelect }) {
             <h3 className="mt-0.5 truncate text-sm font-semibold text-text">
               {project.title}
             </h3>
-            <p className="mt-0.5 line-clamp-1 text-xs text-text-secondary">
+            <p className="mt-0.5 truncate text-xs text-text-secondary">
               {project.tagline}
             </p>
           </div>
 
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-bg-secondary text-[11px] font-semibold text-text-muted">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-bg-secondary text-[11px] font-semibold text-text-muted">
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
@@ -250,17 +256,19 @@ export default function ProjectShowcase({ projects }) {
   return (
     <div className="hidden lg:block">
       <div className="grid h-[760px] grid-cols-[minmax(0,1.05fr)_minmax(400px,0.95fr)] gap-6">
-        <div className="min-h-0 overflow-hidden">
-          <div className="flex h-full min-h-0 flex-col gap-2.5">
-            {orderedProjects.map((project) => {
-              const index = projects.findIndex((item) => item.slug === project.slug);
+        <div className="relative h-[760px] min-h-0">
+          <div className="relative h-[720px] w-full overflow-hidden">
+            {orderedProjects.map((project, stackPosition) => {
+              const index = projects.findIndex(
+                (item) => item.slug === project.slug
+              );
 
               return (
                 <ProjectCard
                   key={project.slug}
                   project={project}
                   index={index}
-                  activeIndex={activeIndex}
+                  stackPosition={stackPosition}
                   onSelect={setActiveIndex}
                 />
               );
