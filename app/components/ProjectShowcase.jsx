@@ -82,7 +82,7 @@ function ProjectDetails({ project, index, total }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="flex h-full min-h-0 flex-col overflow-hidden"
+      className="h-full min-h-0 overflow-y-auto pr-1 [scrollbar-width:thin] overscroll-contain"
     >
       <div className="flex items-start justify-between gap-4">
         <div>
@@ -130,7 +130,7 @@ function ProjectDetails({ project, index, total }) {
 
       <div className="my-4 border-t border-border" />
 
-      <div className="min-h-0 flex-1 overflow-y-auto pr-2 [scrollbar-width:thin] overscroll-contain">
+      <div className="min-w-0">
         <div className="space-y-4">
           <section>
             <h4 className="mb-1.5 text-sm font-semibold text-text">Overview</h4>
@@ -172,7 +172,7 @@ function ProjectDetails({ project, index, total }) {
         </div>
       </div>
 
-      <div className="mt-4 grid shrink-0 gap-3 border-t border-border pt-5 sm:grid-cols-2">
+      <div className="mt-4 grid gap-3 border-t border-border pt-5 sm:grid-cols-2">
         <div className="rounded-xl border border-border bg-bg-secondary/40 p-3">
           <h4 className="mb-2 text-xs font-semibold text-text">Tech Stack</h4>
           <div className="flex flex-wrap gap-1.5">
