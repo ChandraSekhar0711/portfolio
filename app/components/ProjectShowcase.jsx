@@ -31,11 +31,11 @@ function ProjectCard({
   const isVisible = Math.abs(relative) <= 2;
 
   const positions = {
-    "-2": { y: -370, x: 54, width: "72%", scale: 0.91 },
-    "-1": { y: -300, x: 28, width: "80%", scale: 0.95 },
+    "-2": { y: -365, x: 12, width: "92%", scale: 0.91 },
+    "-1": { y: -285, x: 6, width: "96%", scale: 0.95 },
     "0": { y: -200, x: 0, width: "100%", scale: 1 },
-    "1": { y: 175, x: 24, width: "80%", scale: 0.95 },
-    "2": { y: 245, x: 48, width: "72%", scale: 0.91 },
+    "1": { y: 175, x: 6, width: "96%", scale: 0.95 },
+    "2": { y: 245, x: 12, width: "92%", scale: 0.91 },
   };
 
   const position = positions[String(relative)] || positions["0"];
@@ -139,7 +139,7 @@ function ProjectCard({
           </div>
         </div>
       ) : (
-        <div className="flex h-full items-center gap-4 px-5">
+        <div className="flex h-full items-center gap-4 px-4 sm:px-5">
           <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-xl border border-border bg-bg-secondary">
             {project.images?.[0] && (
               <Image
