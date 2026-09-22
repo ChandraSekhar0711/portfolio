@@ -5,21 +5,19 @@ import Link from "next/link";
 import {
   ArrowRight,
   BriefcaseBusiness,
-  Code2,
   FolderKanban,
   House,
   Mail,
-  UserRound,
+  Code2,
 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { personal } from "@/app/lib/data/personal";
 
 const NAV_LINKS = [
   { href: "#top", label: "Home", id: "top", icon: House },
-  { href: "#about", label: "About", id: "about", icon: UserRound },
   { href: "#experience", label: "Experience", id: "experience", icon: BriefcaseBusiness },
-  { href: "#skills", label: "Skills", id: "skills", icon: Code2 },
   { href: "#projects", label: "Projects", id: "projects", icon: FolderKanban },
+  { href: "#skills", label: "Skills", id: "skills", icon: Code2 },
   { href: "#contact", label: "Contact", id: "contact", icon: Mail },
 ];
 
@@ -43,16 +41,23 @@ const NavBar = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveId(entry.target.id);
-        });
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]) setActiveId(visible[0].target.id);
       },
-      { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+      { rootMargin: "-35% 0px -50% 0px", threshold: [0, 0.15, 0.4, 0.7] }
     );
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
+
+  const activeIndex = Math.max(
+    0,
+    NAV_LINKS.findIndex((link) => link.id === activeId)
+  );
 
   return (
     <>
@@ -109,33 +114,50 @@ const NavBar = () => {
 
       <nav
         aria-label="Mobile navigation"
-        className="fixed inset-x-3 bottom-3 z-50 rounded-2xl border border-border bg-card/90 px-2 py-2 shadow-glow backdrop-blur-xl md:hidden"
-        style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+        className="fixed inset-x-4 bottom-3 z-50 md:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
-        <ul className="grid grid-cols-6 items-center">
-          {NAV_LINKS.map((link) => {
-            const Icon = link.icon;
-            const active = activeId === link.id;
+        <div className="relative mx-auto h-[68px] max-w-[390px]">
+          <div className="absolute inset-x-0 bottom-0 h-[58px] rounded-[1.7rem] border border-border bg-card/95 shadow-[0_-10px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl" />
 
-            return (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  aria-current={active ? "page" : undefined}
-                  className={
-                    "mx-0.5 flex flex-col items-center gap-1 rounded-xl px-1 py-2 text-[9px] font-medium transition-all " +
-                    (active
-                      ? "bg-accent/10 text-accent"
-                      : "text-text-muted hover:text-text")
-                  }
-                >
-                  <Icon className="h-4 w-4" aria-hidden="true" />
-                  <span>{link.label}</span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+          <div
+            className="pointer-events-none absolute left-0 top-0 h-[68px] w-1/5 transition-transform duration-300"
+            style={{ transform: "translateX(" + activeIndex * 100 + "%)" }}
+          >
+            <div className="absolute left-1/2 top-0 h-[58px] w-[58px] -translate-x-1/2 rounded-full border border-accent/40 bg-bg shadow-[0_0_0_7px_var(--bg),0_8px_24px_rgba(0,0,0,0.35)]" />
+            <div className="absolute left-1/2 top-[10px] h-[44px] w-[44px] -translate-x-1/2 rounded-full bg-accent text-accent-ink shadow-glow" />
+          </div>
+
+          <ul className="relative grid h-[68px] grid-cols-5 items-end">
+            {NAV_LINKS.map((link, index) => {
+              const Icon = link.icon;
+              const active = activeId === link.id;
+
+              return (
+                <li key={link.href} className="flex h-[58px] items-center justify-center">
+                  <a
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
+                    className={
+                      "relative flex h-full w-full flex-col items-center justify-center gap-1 text-[9px] font-medium transition-all duration-300 " +
+                      (active ? "text-accent" : "text-text-muted hover:text-text")
+                    }
+                  >
+                    <span
+                      className={
+                        "flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 " +
+                        (active ? "-translate-y-3 text-accent-ink" : "")
+                      }
+                    >
+                      <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                    </span>
+                    <span className={active ? "mt-[-8px]" : ""}>{link.label}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </nav>
     </>
   );
