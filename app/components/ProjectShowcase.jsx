@@ -19,58 +19,96 @@ function ProjectCard({ project, index, activeIndex, onSelect }) {
     <motion.button
       type="button"
       onClick={() => onSelect(index)}
-      className={[
-        "absolute inset-0 w-full text-left rounded-[1.6rem] border bg-card shadow-card",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
-        isActive ? "z-20 border-accent shadow-glow" : "z-10 pointer-events-none border-border",
-      ].join(" ")}
-      animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.985 }}
+      layout
       transition={spring}
-      aria-hidden={!isActive}
+      className={[
+        "relative w-full shrink-0 text-left rounded-[1.5rem] border bg-card",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+        isActive
+          ? "border-accent shadow-glow"
+          : "border-border hover:border-accent/50",
+      ].join(" ")}
     >
-      <div className="p-5 sm:p-6">
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border bg-bg-secondary">
-          {project.images?.[0] ? (
-            <Image
-              src={project.images[0]}
-              alt={project.title}
-              fill
-              sizes="(min-width: 1280px) 45vw, 50vw"
-              className="object-cover"
-              priority={index === 0}
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center text-text-muted">
-              No preview available
-            </div>
-          )}
-          <span className="absolute left-4 top-4 rounded-full border border-border bg-bg/85 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-text-secondary backdrop-blur">
-            {project.status}
-          </span>
-        </div>
+      {isActive ? (
+        <div className="p-4 sm:p-5">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border bg-bg-secondary">
+            {project.images?.[0] ? (
+              <Image
+                src={project.images[0]}
+                alt={project.title}
+                fill
+                sizes="(min-width: 1280px) 45vw, 50vw"
+                className="object-cover"
+                priority={index === 0}
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center text-text-muted">
+                No preview available
+              </div>
+            )}
 
-        <div className="mt-4 flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <h3 className="text-xl font-bold tracking-tight text-text sm:text-2xl">
+            <span className="absolute left-3 top-3 rounded-full border border-border bg-bg/85 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-text-secondary backdrop-blur">
+              {project.status}
+            </span>
+
+            <span className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-lg bg-accent text-sm font-bold text-white shadow-lg">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          </div>
+
+          <div className="mt-3 flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h3 className="text-xl font-bold tracking-tight text-text">
+                {project.title}
+              </h3>
+              <p className="mt-1 text-xs leading-5 text-text-secondary">
+                {project.tagline}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {project.stack.slice(0, 5).map((tech) => (
+              <span
+                key={tech}
+                className="rounded-full border border-border bg-bg-secondary/50 px-2 py-0.5 text-[11px] text-text-secondary"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="flex min-h-[82px] items-center gap-3 px-4 py-3">
+          <div className="relative h-14 w-24 shrink-0 overflow-hidden rounded-xl border border-border bg-bg-secondary">
+            {project.images?.[0] && (
+              <Image
+                src={project.images[0]}
+                alt=""
+                fill
+                sizes="96px"
+                className="object-cover"
+              />
+            )}
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent/80">
+              Project {String(index + 1).padStart(2, "0")}
+            </p>
+            <h3 className="mt-0.5 truncate text-sm font-semibold text-text">
               {project.title}
             </h3>
-            <p className="mt-1.5 max-w-xl text-xs leading-6 text-text-secondary">
+            <p className="mt-0.5 line-clamp-1 text-xs text-text-secondary">
               {project.tagline}
             </p>
           </div>
-        </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {project.stack.slice(0, 5).map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full border border-border bg-bg-secondary/50 px-2 py-0.5 text-[11px] text-text-secondary"
-            >
-              {tech}
-            </span>
-          ))}
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-bg-secondary text-[11px] font-semibold text-text-muted">
+            {String(index + 1).padStart(2, "0")}
+          </span>
         </div>
-      </div>
+      )}
     </motion.button>
   );
 }
@@ -203,54 +241,38 @@ export default function ProjectShowcase({ projects }) {
 
   if (!projects?.length) return null;
 
+  const orderedProjects = [
+    projects[activeIndex],
+    ...projects.filter((_, index) => index !== activeIndex),
+  ];
   const activeProject = projects[activeIndex];
 
   return (
     <div className="hidden lg:block">
-      <div className="grid min-h-[590px] grid-cols-[minmax(0,1.05fr)_minmax(400px,0.95fr)] gap-6">
-        <div className="relative min-h-[590px]">
-          <div className="relative h-[540px] w-full">
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={project.slug}
-                project={project}
-                index={index}
-                activeIndex={activeIndex}
-                onSelect={setActiveIndex}
-              />
-            ))}
+      <div className="grid h-[760px] grid-cols-[minmax(0,1.05fr)_minmax(400px,0.95fr)] gap-6">
+        <div className="min-h-0 overflow-hidden">
+          <div className="flex h-full min-h-0 flex-col gap-2.5">
+            {orderedProjects.map((project) => {
+              const index = projects.findIndex((item) => item.slug === project.slug);
 
-            <div className="absolute right-0 top-1/2 z-40 flex -translate-y-1/2 flex-col overflow-hidden rounded-l-xl border border-border bg-bg/90 backdrop-blur">
-              {projects.map((project, index) => {
-                const isActive = index === activeIndex;
-
-                return (
-                  <button
-                    key={project.slug}
-                    type="button"
-                    onClick={() => setActiveIndex(index)}
-                    aria-label={"View " + project.title}
-                    aria-current={isActive ? "true" : undefined}
-                    className={[
-                      "flex h-12 w-12 items-center justify-center border-b border-border text-xs font-semibold tracking-[0.12em] transition-all last:border-b-0",
-                      isActive
-                        ? "bg-accent text-white"
-                        : "text-text-muted hover:bg-accent/10 hover:text-accent",
-                    ].join(" ")}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </button>
-                );
-              })}
-            </div>
+              return (
+                <ProjectCard
+                  key={project.slug}
+                  project={project}
+                  index={index}
+                  activeIndex={activeIndex}
+                  onSelect={setActiveIndex}
+                />
+              );
+            })}
           </div>
 
-          <p className="mt-3 text-center text-xs tracking-wide text-text-muted">
+          <p className="mt-2 text-center text-xs tracking-wide text-text-muted">
             Select a project
           </p>
         </div>
 
-        <div className="h-[540px] min-h-0 overflow-hidden rounded-[1.75rem] border border-border bg-card/80 p-7 shadow-card backdrop-blur-xl sm:p-8">
+        <div className="h-[760px] min-h-0 overflow-hidden rounded-[1.75rem] border border-border bg-card/80 p-7 shadow-card backdrop-blur-xl sm:p-8">
           <AnimatePresence mode="wait">
             <ProjectDetails
               key={activeProject.slug}
