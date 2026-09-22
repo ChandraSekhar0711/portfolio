@@ -12,9 +12,9 @@ const cardSpring = {
   mass: 0.7,
 };
 
-function ProjectCard({ project, index, activeIndex, onSelect }) {
+function ProjectCard({ project, index, activeIndex, total, onSelect }) {
   const isActive = index === activeIndex;
-  const relative = (index - activeIndex + 100) % 100;
+  const relative = (index - activeIndex + total) % total;
 
   return (
     <motion.button
@@ -236,6 +236,7 @@ export default function ProjectShowcase({ projects }) {
                 project={project}
                 index={index}
                 activeIndex={activeIndex}
+                total={projects.length}
                 onSelect={setActiveIndex}
               />
             ))}
