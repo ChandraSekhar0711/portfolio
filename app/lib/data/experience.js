@@ -1,9 +1,11 @@
+import { personal } from "./personal";
+
 export const experience = [
   {
     company: "Tata Consultancy Services",
     role: "Full Stack Engineer / Software Engineer",
     duration: "Oct 2021 — Present",
-    durationShort: "4.5 years",
+    durationShort: `${personal.yearsExperience}+ years`,
     type: "Full-Time",
     location: "Hyderabad, India",
     stack: [

@@ -41,7 +41,7 @@ const Hero = () => {
           </motion.h1>
 
           <motion.p variants={fadeUp} className="max-w-xl text-text-secondary text-lg leading-relaxed">
-            Software engineer with around {personal.yearsExperience} years of experience building modern
+            Software engineer with {personal.yearsExperience}+ years of experience building modern
             web applications and production systems using React.js, JavaScript, Next.js, Node.js, Python
             and AWS.
           </motion.p>

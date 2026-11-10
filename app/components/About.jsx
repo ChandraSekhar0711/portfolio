@@ -2,6 +2,7 @@ import * as motion from "motion/react-client";
 import { GraduationCap, Award } from "lucide-react";
 import { fadeUp, scaleIn, viewportOnce } from "@/app/lib/motion";
 import { education, certifications } from "@/app/lib/data/education";
+import { personal } from "@/app/lib/data/personal";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import Card from "./Card";
@@ -37,7 +38,7 @@ const About = () => {
             viewport={viewportOnce}
             className="text-text-secondary leading-relaxed"
           >
-            I&apos;m a software engineer with around 5 years of experience working across frontend
+            I&apos;m a software engineer with {personal.yearsExperience}+ years of experience working across frontend
             development, full-stack applications, cloud infrastructure and production engineering. My
             primary focus is building modern web applications with React.js, JavaScript and Next.js. I
             also work with Node.js, Python, REST APIs, AWS and cloud-native technologies.

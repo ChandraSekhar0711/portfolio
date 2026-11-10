@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
+import { personal } from "./lib/data/personal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,7 +15,7 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Chandra Sekhar Rao | Frontend Engineer | React & Next.js",
   description:
-    "Portfolio of Chandra Sekhar Rao, a software engineer with around 5 years of experience building modern web applications using React.js, JavaScript, Next.js, Node.js, Python and AWS.",
+    `Portfolio of Chandra Sekhar Rao, a software engineer with ${personal.yearsExperience}+ years of experience building modern web applications using React.js, JavaScript, Next.js, Node.js, Python and AWS.`,
   alternates: {
     canonical: SITE_URL,
   },
@@ -24,7 +25,7 @@ export const metadata = {
   openGraph: {
     title: "Chandra Sekhar Rao | Frontend Engineer | React & Next.js",
     description:
-      "Software engineer with around 5 years of experience building modern web applications using React.js, JavaScript, Next.js, Node.js, Python and AWS.",
+      `Software engineer with ${personal.yearsExperience}+ years of experience building modern web applications using React.js, JavaScript, Next.js, Node.js, Python and AWS.`,
     url: SITE_URL,
     siteName: "Chandra Sekhar Rao — Portfolio",
     type: "website",
@@ -33,7 +34,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Chandra Sekhar Rao | Frontend Engineer | React & Next.js",
     description:
-      "Software engineer with around 5 years of experience building modern web applications using React.js, JavaScript, Next.js, Node.js, Python and AWS.",
+      `Software engineer with ${personal.yearsExperience}+ years of experience building modern web applications using React.js, JavaScript, Next.js, Node.js, Python and AWS.`,
   },
 };
 

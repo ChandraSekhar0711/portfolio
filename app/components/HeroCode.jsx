@@ -6,6 +6,7 @@ const CODE_LINES = [
   { key: "backend", label: "backend", value: '["Node.js", "Python"]' },
   { key: "cloud", label: "cloud", value: '["AWS"]' },
   { key: "devops", label: "devops", value: '["Docker", "CI/CD"]' },
+  {key:"AI", label:"AI", value:'["LLM","RAG(Basics)"]'}
 ];
 
 const HeroCode = () => {

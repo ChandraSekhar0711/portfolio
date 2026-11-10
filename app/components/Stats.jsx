@@ -3,7 +3,7 @@ import { fadeUp, stagger, viewportOnce } from "@/app/lib/motion";
 import { personal } from "@/app/lib/data/personal";
 
 const STATS = [
-  { value: personal.yearsExperience, label: "Years Experience" },
+  { value: `${personal.yearsExperience}+`, label: "Years Experience" },
   { value: "React / Next.js", label: "Primary Focus" },
   { value: "Full Stack", label: "Development" },
   { value: "AWS Certified", label: "Cloud" },

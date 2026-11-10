@@ -1,3 +1,14 @@
+const EXPERIENCE_START_DATE = new Date(Date.UTC(2021, 9, 21));
+const today = new Date();
+const yearsExperience =
+  today.getUTCFullYear() -
+  EXPERIENCE_START_DATE.getUTCFullYear() -
+  (today.getUTCMonth() < EXPERIENCE_START_DATE.getUTCMonth() ||
+  (today.getUTCMonth() === EXPERIENCE_START_DATE.getUTCMonth() &&
+    today.getUTCDate() < EXPERIENCE_START_DATE.getUTCDate())
+    ? 1
+    : 0);
+
 export const personal = {
   name: "Chandra Sekhar Rao Thogiri",
   shortName: "Chandra Sekhar Rao",
@@ -5,7 +16,7 @@ export const personal = {
   altRole: "Frontend / Full-Stack Software Engineer",
   email: "chandutogiri3@gmail.com",
   location: "Hyderabad, India",
-  yearsExperience: "4.5+",
+  yearsExperience,
   availability: "Available for Software Engineering opportunities",
   links: {
     github: "https://github.com/ChandraSekhar0711",
