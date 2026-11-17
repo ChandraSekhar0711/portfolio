@@ -1,7 +1,7 @@
 import * as motion from "motion/react-client";
 import { Github, Linkedin, Code2, ArrowRight, Download } from "lucide-react";
 import { fadeUp, fadeIn, scaleIn, stagger } from "@/app/lib/motion";
-import { personal } from "@/app/lib/data/personal";
+import { personal } from "@/app/features/portfolio/data";
 import Button from "./Button";
 import HeroCode from "./HeroCode";
 import Tooltip from "./Tooltip";
