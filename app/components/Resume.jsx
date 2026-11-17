@@ -1,5 +1,5 @@
 import { FileText, Download } from "lucide-react";
-import { personal } from "@/app/lib/data/personal";
+import { personal } from "@/app/features/portfolio/data";
 import SectionWrapper from "./SectionWrapper";
 import Card from "./Card";
 import Button from "./Button";

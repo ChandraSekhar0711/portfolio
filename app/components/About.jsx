@@ -1,8 +1,8 @@
 import * as motion from "motion/react-client";
 import { GraduationCap, Award } from "lucide-react";
 import { fadeUp, scaleIn, viewportOnce } from "@/app/lib/motion";
-import { education, certifications } from "@/app/lib/data/education";
-import { personal } from "@/app/lib/data/personal";
+import { education, certifications } from "@/app/features/portfolio/data";
+import { personal } from "@/app/features/portfolio/data";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import Card from "./Card";

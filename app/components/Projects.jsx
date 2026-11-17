@@ -3,7 +3,7 @@
 import { useState } from "react";
 import * as motion from "motion/react-client";
 import { fadeUp, viewportOnce } from "@/app/lib/motion";
-import { projects } from "@/app/lib/data/projects";
+import { projects } from "@/app/features/portfolio/data";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import ProjectCard from "./ProjectCard";

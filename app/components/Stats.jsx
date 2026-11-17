@@ -1,6 +1,6 @@
 import * as motion from "motion/react-client";
 import { fadeUp, stagger, viewportOnce } from "@/app/lib/motion";
-import { personal } from "@/app/lib/data/personal";
+import { personal } from "@/app/features/portfolio/data";
 
 const STATS = [
   { value: `${personal.yearsExperience}+`, label: "Years Experience" },

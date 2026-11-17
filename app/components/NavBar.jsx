@@ -12,7 +12,7 @@ import {
   UserRound,
 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
-import { personal } from "@/app/lib/data/personal";
+import { personal } from "@/app/features/portfolio/data";
 
 const NAV_LINKS = [
   { href: "#top", label: "Home", id: "top", icon: House },

@@ -2,7 +2,7 @@ import Image from "next/image";
 import * as motion from "motion/react-client";
 import { CheckCircle2, Circle, Clock, Github, ExternalLink, ImageOff } from "lucide-react";
 import { fadeUp, scaleIn, stagger, viewportOnce } from "@/app/lib/motion";
-import { featuredProject } from "@/app/lib/data/projects";
+import { featuredProject } from "@/app/features/portfolio/data";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import Card from "./Card";

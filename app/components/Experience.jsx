@@ -1,7 +1,7 @@
 import * as motion from "motion/react-client";
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 import { fadeUp, stagger, viewportOnce } from "@/app/lib/motion";
-import { experience } from "@/app/lib/data/experience";
+import { experience } from "@/app/features/portfolio/data";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import Card from "./Card";
