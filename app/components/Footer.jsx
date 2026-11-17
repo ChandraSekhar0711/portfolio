@@ -1,5 +1,5 @@
 import { Github, Linkedin, Code2, Mail } from "lucide-react";
-import { personal } from "@/app/lib/data/personal";
+import { personal } from "@/app/features/portfolio/data";
 import Tooltip from "./Tooltip";
 
 const NAV_LINKS = [
