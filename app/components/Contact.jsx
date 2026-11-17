@@ -4,7 +4,7 @@ import { useState } from "react";
 import * as motion from "motion/react-client";
 import { Mail, Github, Linkedin, Code2, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { fadeUp, viewportOnce } from "@/app/lib/motion";
-import { personal } from "@/app/lib/data/personal";
+import { personal } from "@/app/features/portfolio/data";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import Button from "./Button";
