@@ -1,7 +1,7 @@
 import * as motion from "motion/react-client";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import { fadeUp, stagger, viewportOnce } from "@/app/lib/motion";
-import { techEcosystem } from "@/app/lib/data/techEcosystem";
+import { techEcosystem } from "@/app/features/portfolio/data";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import Card from "./Card";
