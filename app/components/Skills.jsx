@@ -1,7 +1,7 @@
 import * as motion from "motion/react-client";
 import { Code2, Server, Database, Cloud, Wrench } from "lucide-react";
 import { fadeUp, stagger, viewportOnce } from "@/app/lib/motion";
-import { skillGroups } from "@/app/lib/data/skills";
+import { skillGroups } from "@/app/features/portfolio/data";
 import SectionHeading from "./SectionHeading";
 import SectionWrapper from "./SectionWrapper";
 import Card from "./Card";
